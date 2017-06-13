@@ -1,94 +1,35 @@
 //business logic
-function Contact(first, last) {
-  this.firstName = first;
-  this.lastName = last;
-  this.addresses = [];
+function Ticket(movie, time, age, price) {
+  this.movieType = movie;
+  this.timeOfDay = time;
+  this.ageRange = age;
+  this.price = 10
 }
 
-function Address(street, city, state) {
-  this.street = street;
-  this.city = city;
-  this.state = state;
-}
 
-Contact.prototype.fullName = function() {
-  return this.firstName + " " + this.lastName;
-}
+Ticket.prototype.deliveredPrice = function() {
+  if (this.movieType === "secondRun" && this.timeOfDay === "evening" && this.ageRange > 10) {
+//console.log("here")
+    //return (this.price - 5);
+    alert("hi");
+    };
+  };
 
-Address.prototype.fullAddress = function() {
-  return this.street + ", " + this.city + ", " + this.state;
-}
-
-function resetFields() {
-  $("input#new-first-name").val("");
-  $("input#new-last-name").val("");
-  $("input.new-street").val("");
-  $("input.new-city").val("");
-  $("input.new-state").val("");
-}
-
-//var addressNumbersArray = [2, 3, 4, 5];
-  //addressNumbersArray.forEach(function(address) {
-    //var numberInput = $(address++).val();
-    //$(".blank").text(numberInput);
-  //});
-  //return addressNumbersArray()
 
 // user interface logic
 $(document).ready(function() {
-  $("#add-address").click(function() {
-    $("#new-addresses").append('<h3>Address<span class="blank"></span></h3>' +
-                              '<div class="new-address">' +
-                                 '<div class="form-group">' +
-                                   '<label for="new-street">Street</label>' +
-                                   '<input type="text" class="form-control new-street">' +
-                                 '</div>' +
-                                 '<div class="form-group">' +
-                                   '<label for="new-city">City</label>' +
-                                   '<input type="text" class="form-control new-city">' +
-                                 '</div>' +
-                                 '<div class="form-group">' +
-                                   '<label for="new-state">State</label>' +
-                                   '<input type="text" class="form-control new-state">' +
-                                 '</div>' +
-                               '</div>');
-  });
+  $("form#ticket-prices").submit(function(event) {
+      event.preventDefault();
 
-  $("form#new-contact").submit(function(event) {
-    event.preventDefault();
+    var inputtedMovieType = $("input:radio[name=typeOfMovie]:checked").val();
+    var inputtedTimeOfDay = $("input:radio[name=timeOfDay]:checked").val();
+    var inputtedAges = $("input#ageNumber").val();
 
-    var inputtedFirstName = $("input#new-first-name").val();
-    var inputtedLastName = $("input#new-last-name").val();
-
-    var newContact = new Contact(inputtedFirstName, inputtedLastName);
-
-    $(".new-address").each(function() {
-      var inputtedStreet = $(this).find("input.new-street").val();
-      var inputtedCity = $(this).find("input.new-city").val();
-      var inputtedState = $(this).find("input.new-state").val();
-
-      var newAddress = new Address(inputtedStreet, inputtedCity, inputtedState);
-      newContact.addresses.push(newAddress);
-
-    $(".newAddress").remove();
-
-    });
-
-
-    $("ul#contacts").append("<li><span class='contact'>" + newContact.fullName() + "</span></li>");
-
-    $(".contact").last().click(function() {
-      $("#show-contact").show();
-      $("#show-contact h2").text(newContact.firstName);
-      $(".first-name").text(newContact.firstName);
-      $(".last-name").text(newContact.lastName);
-      $("ul#addresses").text("");
-      newContact.addresses.forEach(function(address) {
-        $("ul#addresses").append("<li>" + address.fullAddress() + "</li>");
-      });
-    });
-
-    resetFields();
-
+    var newTicket = new Ticket(inputtedMovieType, inputtedTimeOfDay, inputtedAges);
+    //var finalPrice = deliveredPrice(price);
+  //  $("ul#prices").append("<li><span class='ticket'>" + finalPrice + "</span></li>");
+    //$("ul#prices").append("<li><span class='ticket'>" + newTicket.timeOfDay +  "</span></li>");
+  //  $("ul#prices").append("<li><span class='ticket'>" + newTicket.ageRange +  "</span></li>");
+  //  $("input#ageNumber").val("");
   });
 });
